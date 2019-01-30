@@ -22,20 +22,9 @@ public class SpringCoreApplication {
 		var app = new SpringApplication(SpringCoreApplication.class);
 		app.addInitializers((ApplicationContextInitializer<GenericApplicationContext>) ctx -> {
 			ctx.registerBean(MyService.class);
-			ctx.registerBean(ApplicationRunner.class, new Supplier<ApplicationRunner>() {
-				@Override
-				public ApplicationRunner get() {
-					return new ApplicationRunner() {
-						@Override
-						public void run(ApplicationArguments args) throws Exception {
-							System.out.println("Functional Bean Definition");
-						}
-					};
-				}
-			});
+			ctx.registerBean(ApplicationRunner.class, () -> args1 -> System.out.println("Functional Bean Definition"));
 		});
-		app.run(args);
-		
+		app.run(args);	
 	}
 	
 	
